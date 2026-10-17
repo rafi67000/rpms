@@ -25,6 +25,7 @@ Patch1:         guardpp-build-fix.patch
 Patch2:         include.patch
 Patch3:         desktop-exec.patch
 Patch4:         remove-lsb.patch
+Patch5:         bump-cmake-version.patch
 
 BuildRequires:  cmake
 BuildRequires:  chrpath
@@ -63,7 +64,7 @@ mv lib/%{httplib}-%{httplib_ver} lib/%{httplib}
 
 %build
 %set_build_flags
-%cmake \
+%cmake \cmake
     -DCMAKE_BUILD_TYPE=Release          \
     -DCMAKE_CXX_FLAGS="-include cstdint \
     -Wno-error=deprecated-declarations  \

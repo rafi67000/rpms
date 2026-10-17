@@ -11,7 +11,7 @@
 
 Name:           soundux
 Version:        0.2.7
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A cross-platform soundboard
 License:        GPLv3+
 URL:            https://soundux.rocks
@@ -24,6 +24,7 @@ Patch0:         webviewpp-build-fix.patch
 Patch1:         guardpp-build-fix.patch
 Patch2:         include.patch
 Patch3:         desktop-exec.patch
+Patch4:         remove-lsb.patch
 
 BuildRequires:  cmake
 BuildRequires:  chrpath
@@ -45,7 +46,6 @@ Requires:       ffmpeg
 Requires:       libappindicator-gtk3
 Requires:       libwnck3
 Requires:       (pipewire or pulseaudio)
-Requires:       redhat-lsb
 Requires:       yt-dlp
 
 # Provide own youtube-dl script that uses yt-dlp compat
@@ -109,6 +109,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/%{app_uuid}.xm
 %{_metainfodir}/%{app_uuid}.xml
 
 %changelog
+* Sat Oct 17 2026 Rafał Rosner <kontakt@rafi67000.xyz> - 0.2.7-5
+- Remove dependency on redhat-lsb
+
 * Thu May 30 2024 Arvin Verain <arvinverain@proton.me> - 0.2.7-3
 - Update spec
 

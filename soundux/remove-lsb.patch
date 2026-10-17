@@ -1,0 +1,46 @@
+diff --git a/src/helper/systeminfo/linux/linux-info.cpp b/src/helper/systeminfo/linux/linux-info.cpp
+index bcdda71..1767224 100644
+--- a/src/helper/systeminfo/linux/linux-info.cpp
++++ b/src/helper/systeminfo/linux/linux-info.cpp
+@@ -1,23 +1,25 @@
+ #if defined(__linux__)
+ #include "../systeminfo.hpp"
+ #include <fancy.hpp>
+-#include <helper/misc/misc.hpp>
++#include <string>
++#include <fstream>
++#include <iterator>
+ 
+ std::string SystemInfo::getSystemInfo()
+ {
+-    auto [result, success] = Soundux::Helpers::getResultCompact("lsb_release -a");
++    std::string result;
++    std::ifstream osRelease("/etc/os-release");
+ 
+-    if (success)
++    if (osRelease)
+     {
+-        if (result.empty())
+-        {
+-            Fancy::fancy.logTime().warning() << "lsb_release output was empty!" << std::endl;
+-            result = "lsb_release failed";
+-        }
++        result.assign(
++            std::istreambuf_iterator<char>(osRelease),
++            std::istreambuf_iterator<char>()
++        );
+     }
+     else
+     {
+-        Fancy::fancy.logTime().warning() << "lsb_release failed!" << std::endl;
++        result = "Failed to read /etc/os-release";
+     }
+ 
+     auto *desktopEnv = std::getenv("XDG_CURRENT_DESKTOP"); // NOLINT
+@@ -42,4 +44,4 @@ std::string SystemInfo::getSystemInfo()
+ 
+     return result;
+ }
+-#endif
+\ No newline at end of file
++#endif
